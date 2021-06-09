@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event to modify if the button is disabled or not">
+    <aura:attribute name="button" type="String" />
+    <aura:attribute name="disabled" type="boolean" />
+</aura:event>

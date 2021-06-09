@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+  <aura:attribute name="contact" type="Contact" />
+  <aura:attribute name="numcharacter" type="integer" />
+</aura:event>

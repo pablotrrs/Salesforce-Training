@@ -1,0 +1,17 @@
+<apex:page sidebar="false" showHeader="false" controller="AccountMessageController">
+    <apex:form >
+        <apex:pageBlock title="Accounts">
+            <c:MultiselectPicklist leftLabel="Available Accounts" leftOption="{!allAccounts}" rightLabel="Selected Accounts" rightOption="{!selectedAccounts}"
+                size="14" width="250px" />
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{! mensaje.Name }" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:outputText >{!mensajeTexto}</apex:outputText>
+    <br/>
+    <apex:outputText >{!message}</apex:outputText>
+</apex:page>

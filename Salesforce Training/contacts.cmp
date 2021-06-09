@@ -1,0 +1,53 @@
+<aura:component controller="contactsController">
+    <aura:attribute name="contacts" type="Contact[]" />
+    
+    <aura:registerEvent name="returnContact" type="c:returnContactEvent" />
+    
+    <aura:handler
+                  name="init"
+                  action="{!c.obtainCharactersCount}"
+                  value="{!this}"
+    />
+    <aura:handler name="init" action="{!c.loadContacts}" value="{!this}" />
+    <aura:handler
+                  name="searchCharacter"
+                  event="c:contactsItemEvent"
+                  action="{!c.searchCharacter}"
+    />
+    <aura:handler
+                  name="checkExistence"
+                  event="c:contactsItemEvent"
+                  action="{!c.checkExistence}"
+    />
+    <aura:handler
+                  name="createContact"
+                  event="c:contactsItemEvent"
+                  action="{!c.createContact}"
+    />
+    <aura:handler
+                  name="updateContact"
+                  event="c:contactsItemEvent"
+                  action="{!c.updateContact}"
+    />
+    
+    <div class="c-container">
+        <lightning:layout multipleRows="true">
+        	<lightning:layoutItem padding="around-small" size="12">
+                <div class="page-section page-header slds-modal__header">
+                    <h2>Contactos de Star Wars</h2>
+            	</div>
+            </lightning:layoutItem>
+            <c:contactsForm />
+            <div class="page-section page-right">
+                <ui:scrollerWrapper class="sWrap">
+                    <c:contactsList contacts="{!v.contacts}" />
+                </ui:scrollerWrapper>
+            </div>
+            <lightning:layoutItem flexibility="auto" padding="around-small" size="12">
+                <div class="page-footer page-section">
+                    <h2>Copyright © 2021 pablo.torres@xappia.com</h2>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+	</div>
+</aura:component>

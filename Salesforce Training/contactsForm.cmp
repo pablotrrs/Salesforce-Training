@@ -1,0 +1,211 @@
+<aura:component>
+    <aura:attribute
+                    name="newContact"
+                    type="Contact"
+                    default="{ 'Name': '',
+                             'FirstName': '',
+                             'LastName': '',
+                             'Altura__c': '',
+                             'Genero__c': '',
+                             'Color_de_cabello__c': '',
+                             'Color_de_ojos__c': '',
+                             'URL__c': '',
+                             'Planeta__c': '',
+                             'Numero_de_Personaje__c': ''}"
+    />
+    <aura:attribute name="confirmDialog" type="boolean" default="false" />
+    <aura:attribute name="confirmCreation" type="boolean" default="false" />
+    <aura:attribute name="nonExistentCharacter" type="boolean" default="false" />
+    
+    <aura:registerEvent name="searchCharacter" type="c:contactsItemEvent" />
+    <aura:registerEvent name="checkExistence" type="c:contactsItemEvent" />
+    <aura:registerEvent name="createContact" type="c:contactsItemEvent" />
+    <aura:registerEvent name="updateContact" type="c:contactsItemEvent" />
+    
+    <aura:handler
+                  event="c:returnContactEvent"
+                  action="{!c.handleUpdateContact}"
+    />
+    <aura:handler
+                  event="c:confirmDialogEvent"
+                  action="{!c.handleConfirmDialog}"
+    />
+    <aura:handler
+                  event="c:confirmCreationEvent"
+                  action="{!c.handleconfirmCreation}"
+    />
+    <aura:handler
+                  event="c:contactsItemUpdateEvent"
+                  action="{!c.handleUpdateCount}"
+     />
+    
+    <div class="page-section page-left">
+        <div aria-labelledby="newcharacterform">
+            <fieldset class="slds-box  fldset">
+                <form class="slds-form_stacked theform">
+                    <lightning:input
+                                     type="number"
+                                     aura:id="num_character"
+                                     label="Número de personaje"
+                                     name="num_character"
+                                     min="1"
+                                     step="01"
+                                     fieldLevelHelp="Ingresá un número para buscar al personaje de Star Wars."
+                                     messageWhenRangeOverflow="No existe un personaje con ese número, por favor ingrese uno menor."
+                                     messageWhenRangeUnderflow="No existe un personaje con ese número, por favor ingrese uno mayor."
+                    />
+                    <div class="button">
+                        <lightning:button
+                                          label="Buscar personaje"
+                                          class="slds-m-top_medium"
+                                          variant="brand"
+                                          onclick="{!c.searchCharacter}"
+                                          iconName="utility:search"
+                                          iconPosition="left"
+                        />
+                    </div>
+                    <lightning:input
+                                     type="text"
+                                     aura:id="charactername"
+                                     label="Nombre"
+                                     name="charactername"
+                                     value=""
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="Altura"
+                                     name="altura"
+                                     value="{!v.newContact.Altura__c}"
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="Género"
+                                     name="genero"
+                                     value="{!v.newContact.Genero__c}"
+                                     disabled="true"
+					/>
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="Color de cabello"
+                                     name="color_de_cabello"
+                                     value="{!v.newContact.Color_de_cabello__c}"
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="Color de ojos"
+                                     name="color_de_ojos"
+                                     value="{!v.newContact.Color_de_ojos__c}"
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="URL"
+                                     name="url"
+                                     value="{!v.newContact.URL__c}"
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="text"
+                                     aura:id="characterform"
+                                     label="Planeta"
+                                     name="planeta"
+                                     value="{!v.newContact.Planeta__c}"
+                                     disabled="true"
+                    />
+                    <lightning:input
+                                     type="number"
+                                     aura:id="characterform"
+                                     label="Número de personaje"
+                                     name="numero_de_personaje"
+                                     min="0"
+                                     step="01"
+                                     value="{!v.newContact.Numero_de_Personaje__c}"
+                                     disabled="true"
+                    />
+                    <div class="button">
+                        <lightning:button
+                                          name="save"
+                                          variant="brand"
+                                          label="Guardar contacto"
+                                          onclick="{!c.clickCreate}"
+                                          class="slds-m-top_medium button"
+                                          iconName="utility:save"
+                                          iconPosition="left"
+        	            />
+                    </div>
+                    <aura:if isTrue="{!v.confirmCreation}">
+                        <div class="slds-modal slds-fade-in-open ">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__content slds-p-around--medium confirm_dialog">
+                                    <b>
+                                        El contacto ha sido guardado con éxito 
+                                    </b>
+                                </div>
+                                <lightning:button
+                                                  variant="brand"
+                                                  name="Ok"
+                                                  label="Ok"
+                                                  onclick="{!c.handleConfirmOk}"
+                                />
+                            </div>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.nonExistentCharacter}">
+                        <div class="slds-modal slds-fade-in-open ">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__content slds-p-around--medium confirm_dialog" >
+                                    <b>
+                                        No existe un personaje con el número indicado 
+                                    </b>
+                                </div>
+                                <lightning:button
+                                                  variant="brand"
+                                                  name="Ok"
+                                                  label="Ok"
+                                                  onclick="{!c.handleConfirmOk}"
+                                />
+                            </div>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.confirmDialog}">
+                        <div class="slds-modal slds-fade-in-open ">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header header_dialog">
+                                    <h1 class="slds-text-heading--medium">Confirmación</h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around--medium">
+                                    <center>
+                                        	<b>
+                                                El contacto ya existe <p>¿Desea guardarlo de nuevo?</p>
+                                        	</b>
+                                    </center>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning:button
+                                                      name="No"
+                                                      label="No"
+                                                      onclick="{!c.handleConfirmDialogNo}"
+                                    />
+                                    <lightning:button
+                                                      variant="brand"
+                                                      name="Si"
+                                                      label="Sí"
+                                                      onclick="{!c.handleConfirmDialogYes}"
+                                    />
+                                </footer>
+                            </div>
+                        </div>
+                    </aura:if>
+                </form>
+            </fieldset>
+        </div>
+    </div>
+</aura:component>

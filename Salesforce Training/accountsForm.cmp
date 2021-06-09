@@ -1,0 +1,50 @@
+<aura:component>
+    <aura:attribute name="cases" type="Case[]"/>
+    <aura:attribute name="selectedCases" type="Case[]"/>
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    
+    <aura:registerEvent name="saveCases" type="c:saveCasesComponentEvent" />
+    
+    <aura:handler
+                  event="c:searchRelatedCasesApplicationEvent"
+                  action="{!c.handleUpdateCases}"
+                  />
+    
+    <lightning:datatable
+                         aura:id="casesTable"
+                         columns="{!v.columns}"
+                         data="{!v.cases}"
+                         keyField="id"
+                         />
+    <div>
+        <lightning:button
+                          label="Close selected cases"
+                          class="slds-m-top_medium"
+                          variant="brand"
+                          onclick="{!c.closeCases}"
+                          iconName="utility:case"
+                          iconPosition="right"
+                          />
+        <div>
+            <aura:iteration items="{!v.selectedCases}" var="case">
+                <lightning:input
+                                 type="text"
+                                 aura:id="closingReason"
+                                 label="{!'Closing Reason for case number ' + case.CaseNumber}"
+                                 name="closingReason"
+                                 value=""
+                                 required="true"
+                                 />
+            </aura:iteration>
+        </div>
+        <lightning:button
+                          label="Save cases"
+                          class="slds-m-top_medium"
+                          variant="brand"
+                          onclick="{!c.saveCases}"
+                          iconName="utility:save"
+                          iconPosition="right"
+                          />
+    </div>
+</aura:component>

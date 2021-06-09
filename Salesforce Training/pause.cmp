@@ -1,0 +1,27 @@
+<aura:component>
+    <aura:attribute name="buttonType" type="String" />
+    <aura:attribute name="iconName" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:registerEvent
+                        name="notifyClick"
+                        type="c:notifyClickComponentEvent"
+                        />
+    
+    <aura:handler
+                  event="c:modifyButtonVisibilityApplicationEvent"
+                  action="{!c.handleButtonModification}"
+                  />
+    
+    <lightning:button
+                      aura:id="pauseButton"
+                      variant="neutral"
+                      label="Pause"
+                      onclick="{!c.handleClick}"
+                      disabled="true"
+                      iconName="{!v.iconName}"
+                      iconPosition="left"
+                      type="{!v.buttonType}"
+                      />
+</aura:component>

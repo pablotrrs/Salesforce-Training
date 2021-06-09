@@ -1,0 +1,21 @@
+<aura:component>
+    <aura:attribute name="buttonType" type="String" />
+    <aura:attribute name="iconName" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:registerEvent
+                        name="notifyClick"
+                        type="c:notifyClickComponentEvent"
+                        />
+    
+    <lightning:button
+                      aura:id="button"
+                      variant="neutral"
+                      label="Stop"
+                      onclick="{!c.handleClick}"
+                      iconName="{!v.iconName}"
+                      iconPosition="left"
+                      type="{!v.buttonType}"
+                      />
+</aura:component>

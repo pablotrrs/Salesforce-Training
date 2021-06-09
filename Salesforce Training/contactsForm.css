@@ -1,0 +1,34 @@
+.THIS .button {
+    text-align: center;
+}
+
+.THIS .page-left {
+    background: #f0efef;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.THIS .fldset {
+    height: 79vh;
+    width: 450px;
+}
+
+.THIS .header_dialog {
+    background: #0070d2;
+    color: #FFFFFF;
+}
+
+.THIS .header_form {
+    font-size: 16px;
+    text-align: center;
+}
+
+.THIS .confirm_dialog {
+    text-align: center;
+}
+
+.THIS .theform {  
+    height: 79vh;
+    min-height: 680px;
+}
